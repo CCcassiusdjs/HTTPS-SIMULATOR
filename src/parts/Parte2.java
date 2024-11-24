@@ -1,3 +1,19 @@
+/**
+ * Parte2.java
+ * <p>
+ * Este arquivo implementa o processamento seguro de mensagens, incluindo a decifração,
+ * inversão do conteúdo e recifração utilizando criptografia AES no modo CBC.
+ * <p>
+ * Autores:
+ * - Cassio Silva (c.jones@edu.pucrs.br)
+ * - Arthur Gil (a.gil@edu.pucrs.br)
+ * <p>
+ * Data de Criação: 21/11/2024
+ * Última Modificação: 23/11/2024
+ *
+ */
+
+
 package parts;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,10 +28,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * Classe responsável pelo processamento da mensagem cifrada, decifração, inversão,
- * e salvamento da mensagem processada.
- */
 public final class Parte2 {
 
     /**

@@ -1,3 +1,18 @@
+/**
+ * Parte1.java
+ * <p>
+ * Este arquivo implementa a geração de chaves Diffie-Hellman, incluindo a geração de valores privados
+ * e públicos, além de salvar os resultados em arquivos para uso posterior na comunicação segura.
+ * <p>
+ * Autores:
+ * - Cassio Silva (c.jones@edu.pucrs.br)
+ * - Arthur Gil (a.gil@edu.pucrs.br)
+ * <p>
+ * Data de Criação: 20/11/2024
+ * Última Modificação: 23/11/2024
+ *
+ */
+
 package parts;
 
 import config.Constants;

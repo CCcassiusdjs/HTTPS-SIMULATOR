@@ -1,3 +1,19 @@
+/**
+ * CryptographyUtils.java
+ * <p>
+ * Este arquivo contém utilitários para operações criptográficas, incluindo geração de IVs aleatórios,
+ * encriptação e decriptação com AES em modo CBC, cálculo de hashes SHA-256 e manipulação de strings hexadecimais.
+ * <p>
+ * Autores:
+ * - Cassio Silva (c.jones@edu.pucrs.br)
+ * - Arthur Gil (a.gil@edu.pucrs.br)
+ * <p>
+ * Data de Criação: 20/11/2024
+ * Última Modificação: 23/11/2024
+ *
+ */
+
+
 package security;
 
 import org.jetbrains.annotations.NotNull;

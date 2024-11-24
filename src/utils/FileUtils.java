@@ -1,3 +1,19 @@
+/**
+ * FileUtils.java
+ * <p>
+ * Este arquivo contém utilitários para operações com arquivos, incluindo leitura e escrita de dados,
+ * manipulação de strings e conversão entre bytes e hexadecimal, para suporte às funcionalidades do projeto.
+ * <p>
+ * Autores:
+ * - Cassio Silva (c.jones@edu.pucrs.br)
+ * - Arthur Gil (a.gil@edu.pucrs.br)
+ * <p>
+ * Data de Criação: 21/11/2024
+ * Última Modificação: 23/11/2024
+ *
+ */
+
+
 package utils;
 
 import org.jetbrains.annotations.NotNull;
@@ -8,9 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-/**
- * Classe utilitária para operações de arquivo.
- */
 public final class FileUtils {
     private FileUtils() {
         // Impede a instanciação.

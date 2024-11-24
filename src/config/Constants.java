@@ -1,3 +1,18 @@
+/**
+ * Constants.java
+ * <p>
+ * Este arquivo contém as constantes utilizadas no projeto, incluindo valores de `p` e `g`
+ * para o algoritmo Diffie-Hellman, além de configurações para criptografia AES e hash SHA-256.
+ * <p>
+ * Autores:
+ * - Cassio Silva (c.jones@edu.pucrs.br)
+ * - Arthur Gil (a.gil@edu.pucrs.br)
+ * <p>
+ * Data de Criação: 20/11/2024
+ * Última Modificação: 23/11/2024
+ *
+ */
+
 package config;
 
 import java.math.BigInteger;
