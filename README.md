@@ -1,149 +1,160 @@
 # **HTTPS Simulator**
 
-Este projeto é uma implementação de um simulador de comunicação segura utilizando conceitos de criptografia. Ele foi desenvolvido como parte de um trabalho prático, abordando a troca de chaves com Diffie-Hellman e a troca segura de mensagens usando o algoritmo AES em modo CBC.
+This project is an implementation of a secure communication simulator using cryptographic concepts. It was developed as part of a practical assignment, addressing key exchange with Diffie-Hellman and secure message exchange using the AES algorithm in CBC mode.
 
-## **Funcionalidades**
-O simulador implementa as seguintes funcionalidades:
+---
 
-1. **Geração de Chaves com Diffie-Hellman**:
-    - Geração de um valor privado `a`.
-    - Cálculo do valor público `A = g^a mod p`.
-    - Recebimento de `B` (valor público do outro participante).
-    - Cálculo da chave compartilhada `V = B^a mod p`.
-    - Derivação da chave de sessão `S` como os 128 bits menos significativos do hash SHA-256 de `V`.
+## **Features**
 
-2. **Troca Segura de Mensagens**:
-    - Decifração de mensagens no formato `[128 bits IV][mensagem cifrada]`.
-    - Inversão do conteúdo da mensagem decifrada.
-    - Cifra do conteúdo invertido com um novo IV gerado aleatoriamente no formato `[128 bits IV][mensagem cifrada]`.
+The simulator implements the following functionalities:
 
-## **Arquitetura do Código**
-O projeto está organizado nos seguintes pacotes:
+1. **Diffie-Hellman Key Generation**:
+   - Generates a private value `a`.
+   - Computes the public value `A = g^a mod p`.
+   - Receives `B` (public value from the other participant).
+   - Computes the shared key `V = B^a mod p`.
+   - Derives the session key `S` as the 128 least significant bits of the SHA-256 hash of `V`.
+
+2. **Secure Message Exchange**:
+   - Decrypts messages in the format `[128-bit IV][encrypted message]`.
+   - Reverses the content of the decrypted message.
+   - Encrypts the reversed content with a new randomly generated IV in the format `[128-bit IV][encrypted message]`.
+
+---
+
+## **Code Architecture**
+
+The project is organized into the following packages:
 
 ### **1. `config`**
-Contém a classe `Constants`, que armazena valores constantes utilizados no projeto, como `p`, `g`, configurações do AES e algoritmos de hash.
+Contains the `Constants` class, which stores constant values used throughout the project, such as `p`, `g`, AES configurations, and hashing algorithms.
 
 ### **2. `parts`**
 - **`Parte1`**:
-  Implementa a geração de chaves Diffie-Hellman e cálculos relacionados.
+  Implements Diffie-Hellman key generation and related computations.
 - **`Parte2`**:
-  Implementa o processamento de mensagens cifradas, incluindo decifração, inversão e recifração.
+  Implements encrypted message processing, including decryption, reversal, and re-encryption.
 
 ### **3. `security`**
-Contém a classe `CryptographyUtils`, que encapsula operações criptográficas, como:
-- Geração de IVs aleatórios.
-- Encriptação e decriptação com AES.
-- Conversão de dados para/da representação hexadecimal.
+Contains the `CryptographyUtils` class, which encapsulates cryptographic operations such as:
+- Random IV generation.
+- AES encryption and decryption.
+- Data conversion to/from hexadecimal representation.
 
 ### **4. `utils`**
-Contém a classe `FileUtils`, que gerencia operações de leitura e escrita de arquivos.
+Contains the `FileUtils` class, which handles file reading and writing operations.
 
 ---
 
-## **Requisitos**
-Para executar o projeto, você precisa de:
-- **Java JDK 17** ou superior (recomendado JDK 21 para utilizar strings multilinha e recursos modernos).
-- Um editor ou IDE (IntelliJ IDEA, Eclipse, etc.).
-- Git para controle de versão (opcional).
+## **Requirements**
+
+To run the project, you need:
+- **Java JDK 17** or higher (JDK 21 recommended for modern features like multi-line strings).
+- An editor or IDE (IntelliJ IDEA, Eclipse, etc.).
+- Git for version control (optional).
 
 ---
 
-## **Como Executar**
+## **How to Run**
 
-### **1. Clonar o Repositório**
-Clone este repositório para sua máquina local:
+### **1. Clone the Repository**
+Clone this repository to your local machine:
 ```bash
-git clone https://github.com/SEU_USUARIO/HTTPS-Simulator.git
+git clone https://github.com/YOUR_USERNAME/HTTPS-Simulator.git
 cd HTTPS-Simulator
 ```
 
-### **2. Compilar o Projeto**
-Certifique-se de que o JDK está configurado corretamente. Para compilar o projeto, execute:
+### **2. Compile the Project**
+Ensure that the JDK is properly configured. To compile the project, run:
 ```bash
 javac -d out src/**/*.java
 ```
 
-### **3. Executar o Projeto**
-Para executar o projeto, utilize o seguinte comando:
+### **3. Run the Project**
+To execute the project, use the following command:
 ```bash
 java -cp out Main
 ```
 
-### **4. Fluxo de Execução**
-O programa solicita ao usuário que escolha executar a **Parte 1** (Geração de Chaves) ou a **Parte 2** (Processamento de Mensagens):
-1. **Parte 1**:
-    - Gera `a` e `A`, salva em arquivos `a.txt` e `AA.txt`.
-    - Calcula `S` após receber `B` do professor, salva em `S.key`.
+### **4. Execution Flow**
+The program prompts the user to choose between executing **Part 1** (Key Generation) or **Part 2** (Message Processing):
 
-2. **Parte 2**:
-    - Decifra a mensagem armazenada em `message.enc`.
-    - Inverte o conteúdo da mensagem.
-    - Cifra o conteúdo invertido com um novo IV, salvando em `message_inverted.enc`.
+1. **Part 1**:
+   - Generates `a` and `A`, saving them in `a.txt` and `AA.txt`.
+   - Computes `S` after receiving `B` from the professor and saves it in `S.key`.
+
+2. **Part 2**:
+   - Decrypts the message stored in `message.enc`.
+   - Reverses the content of the message.
+   - Encrypts the reversed content with a new IV, saving it in `message_inverted.enc`.
 
 ---
 
-## **Estrutura do Projeto**
+## **Project Structure**
+
 ```plaintext
 src/
 ├── config/
-│   └── Constants.java       # Constantes do projeto (valores de p, g, etc.)
+│   └── Constants.java        # Project constants (values for p, g, etc.)
 ├── parts/
-│   ├── Parte1.java          # Implementação da geração de chaves Diffie-Hellman
-│   └── Parte2.java          # Processamento seguro de mensagens
+│   ├── Parte1.java           # Diffie-Hellman key generation implementation
+│   └── Parte2.java           # Secure message processing
 ├── security/
-│   └── CryptographyUtils.java # Operações criptográficas (AES, hash, IV)
+│   └── CryptographyUtils.java # Cryptographic operations (AES, hash, IV)
 ├── utils/
-│   └── FileUtils.java       # Gerenciamento de arquivos
-└── Main.java                # Classe principal para executar o programa
+│   └── FileUtils.java        # File management utilities
+└── Main.java                 # Main class to execute the program
 ```
 
 ---
 
-## **Detalhes de Implementação**
+## **Implementation Details**
 
-### **Geração de Chaves (Parte 1)**
-1. **Valor Privado `a`**:
-    - É gerado usando `SecureRandom` e tem comprimento inferior a `p`.
+### **Key Generation (Part 1)**
+1. **Private Value `a`**:
+   - Generated using `SecureRandom` and has a length smaller than `p`.
 
-2. **Valor Público `A`**:
-    - Calculado como `g^a mod p` e salvo no arquivo `AA.txt`.
+2. **Public Value `A`**:
+   - Computed as `g^a mod p` and saved in `AA.txt`.
 
-3. **Chave Compartilhada `V`**:
-    - Após receber `B` (do professor), calcula `V = B^a mod p`.
+3. **Shared Key `V`**:
+   - After receiving `B` (from the professor), computes `V = B^a mod p`.
 
-4. **Chave de Sessão `S`**:
-    - Derivada de `SHA-256(V)`, utilizando os 128 bits menos significativos.
+4. **Session Key `S`**:
+   - Derived from `SHA-256(V)` using the 128 least significant bits.
 
-### **Troca de Mensagens (Parte 2)**
-1. **Decifração**:
-    - Utiliza AES em modo CBC com o IV extraído dos primeiros 16 bytes da mensagem.
+### **Message Exchange (Part 2)**
+1. **Decryption**:
+   - Uses AES in CBC mode with the IV extracted from the first 16 bytes of the message.
 
-2. **Inversão**:
-    - O texto decifrado é invertido.
+2. **Reversal**:
+   - The decrypted text is reversed.
 
-3. **Recifração**:
-    - Gera um novo IV aleatório e cifra a mensagem invertida no formato especificado.
-
----
-
-## **Testes**
-Certifique-se de que o fluxo funciona conforme esperado:
-1. **Parte 1**:
-    - Confirme que os valores de `a` e `A` são salvos corretamente.
-    - Verifique o cálculo de `V` e `S`.
-
-2. **Parte 2**:
-    - Teste com diferentes mensagens cifradas.
-    - Certifique-se de que o formato `[IV][mensagem cifrada]` está sendo respeitado.
+3. **Re-encryption**:
+   - Generates a new random IV and encrypts the reversed message in the specified format.
 
 ---
 
-## **Problemas Comuns**
-1. **Chave ou IV Inválidos**:
-    - Certifique-se de que `S.key` foi gerado corretamente antes de executar a Parte 2.
+## **Testing**
 
-2. **Conflitos de Arquivo**:
-    - Apague ou mova arquivos existentes se desejar reiniciar o fluxo.
+Ensure that the flow works as expected:
+1. **Part 1**:
+   - Verify that the values of `a` and `A` are correctly saved.
+   - Validate the computation of `V` and `S`.
 
-3. **Erros de Execução**:
-    - Confirme que o JDK instalado é compatível (JDK 17 ou superior).
+2. **Part 2**:
+   - Test with various encrypted messages.
+   - Ensure that the format `[IV][encrypted message]` is respected.
+
+---
+
+## **Common Issues**
+
+1. **Invalid Key or IV**:
+   - Ensure that `S.key` is correctly generated before running Part 2.
+
+2. **File Conflicts**:
+   - Delete or move existing files if you wish to restart the flow.
+
+3. **Execution Errors**:
+   - Confirm that the installed JDK is compatible (JDK 17 or higher).
