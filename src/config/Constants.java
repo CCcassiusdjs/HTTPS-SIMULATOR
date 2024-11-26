@@ -1,15 +1,15 @@
 /**
  * Constants.java
  * <p>
- * Este arquivo contém as constantes utilizadas no projeto, incluindo valores de `p` e `g`
- * para o algoritmo Diffie-Hellman, além de configurações para criptografia AES e hash SHA-256.
+ * This file contains constants used in the project, including values for `p` and `g`
+ * for the Diffie-Hellman algorithm, as well as configurations for AES encryption and SHA-256 hashing.
  * <p>
- * Autores:
+ * Authors:
  * - Cassio Silva (c.jones@edu.pucrs.br)
  * - Arthur Gil (a.gil@edu.pucrs.br)
  * <p>
- * Data de Criação: 20/11/2024
- * Última Modificação: 23/11/2024
+ * Creation Date: 20/11/2024
+ * Last Modified: 23/11/2024
  *
  */
 
@@ -19,10 +19,10 @@ import java.math.BigInteger;
 
 public final class Constants {
     private Constants() {
-        // Impede a instanciação.
+        // Prevent instantiation.
     }
 
-    // Constantes de p e g em formato hexadecimal
+    // Constants for p and g in hexadecimal format
     public static final String P_HEX = """
             B10B8F96A080E01DDE92DE5EAE5D54EC52C99FBCFB06A3C69A6A9DCA52D23B61
             6073E28675A23D189838EF1E2EE652C013ECB4AEA906112324975C3CD49B83BF
@@ -42,5 +42,4 @@ public final class Constants {
     public static final String AES_TRANSFORMATION = "AES/CBC/PKCS5Padding";
     public static final String AES_ALGORITHM = "AES";
     public static final String HASH_ALGORITHM = "SHA-256";
-
 }

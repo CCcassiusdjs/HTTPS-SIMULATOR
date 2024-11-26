@@ -1,22 +1,20 @@
 /**
  * Parte2.java
  * <p>
- * Este arquivo implementa o processamento seguro de mensagens, incluindo a decifração,
- * inversão do conteúdo e recifração utilizando criptografia AES no modo CBC.
+ * This file implements secure message processing, including decryption,
+ * reversing the content, and re-encrypting using AES encryption in CBC mode.
  * <p>
- * Autores:
+ * Authors:
  * - Cassio Silva (c.jones@edu.pucrs.br)
  * - Arthur Gil (a.gil@edu.pucrs.br)
  * <p>
- * Data de Criação: 21/11/2024
- * Última Modificação: 23/11/2024
+ * Creation Date: 21/11/2024
+ * Last Modified: 23/11/2024
  *
  */
 
-
 package parts;
 
-import org.jetbrains.annotations.NotNull;
 import security.CryptographyUtils;
 import utils.FileUtils;
 
@@ -31,59 +29,59 @@ import java.util.concurrent.CompletableFuture;
 public final class Parte2 {
 
     /**
-     * Processa a mensagem cifrada, decifra, inverte e salva os resultados.
+     * Processes the encrypted message: decrypts, reverses, and saves the results.
      *
-     * @throws Exception Se ocorrer um erro durante o processamento.
+     * @throws Exception If an error occurs during processing.
      */
     public static void processMessage() throws Exception {
         Scanner scanner = new Scanner(System.in);
 
-        // Lê a chave secreta armazenada em 'S.key'
+        // Read the secret key stored in 'S.key'
         byte[] secretKey = FileUtils.readStringAsBytes("S.key");
 
-        // Verificar se a mensagem cifrada existe
+        // Check if the encrypted message exists
         Path messagePath = Path.of("message.enc");
         byte[] messageBytes = Files.exists(messagePath)
                 ? getMessageBytes(scanner, messagePath)
                 : requestNewMessage(scanner, messagePath);
 
-        // Separar IV e texto cifrado
+        // Separate IV and ciphertext
         byte[] iv = Arrays.copyOfRange(messageBytes, 0, 16);
         byte[] ciphertext = Arrays.copyOfRange(messageBytes, 16, messageBytes.length);
 
-        // Decifrar e inverter a mensagem em paralelo
+        // Decrypt and reverse the message in parallel
         CompletableFuture<String> decryptedFuture = CompletableFuture.supplyAsync(() -> decryptMessage(ciphertext, secretKey, iv));
         CompletableFuture<String> invertedFuture = decryptedFuture.thenApplyAsync(Parte2::invertMessage);
 
-        // Cifrar a mensagem invertida
+        // Encrypt the reversed message
         String invertedPlaintext = invertedFuture.get();
         byte[] newIv = CryptographyUtils.generateRandomIv();
         byte[] encryptedInvertedBytes = CryptographyUtils.encrypt(invertedPlaintext.getBytes(StandardCharsets.UTF_8), secretKey, newIv);
 
-        // Concatenar IV e texto cifrado
+        // Concatenate IV and ciphertext
         byte[] newMessage = new byte[newIv.length + encryptedInvertedBytes.length];
         System.arraycopy(newIv, 0, newMessage, 0, newIv.length);
         System.arraycopy(encryptedInvertedBytes, 0, newMessage, newIv.length, encryptedInvertedBytes.length);
 
-        // Converter para hexadecimal e salvar no arquivo 'message_inverted.enc'
+        // Convert to hexadecimal and save to 'message_inverted.enc'
         FileUtils.writeBytesAsHex("message_inverted.enc", newMessage);
 
-        System.out.println("Mensagem invertida cifrada salva em 'message_inverted.enc'.");
-        System.out.println("Envie o arquivo 'message_inverted.enc' ao professor.");
+        System.out.println("Reversed encrypted message saved in 'message_inverted.enc'.");
+        System.out.println("Send the file 'message_inverted.enc' to the professor.");
     }
 
     /**
-     * Obtém os bytes da mensagem existente ou solicita uma nova entrada ao usuário.
+     * Gets the bytes of an existing message or prompts the user for new input.
      *
-     * @param scanner     Scanner para entrada do usuário.
-     * @param messagePath Caminho do arquivo de mensagem.
-     * @return Bytes da mensagem cifrada.
-     * @throws Exception Se ocorrer um erro durante a leitura.
+     * @param scanner     Scanner for user input.
+     * @param messagePath Path to the message file.
+     * @return Encrypted message bytes.
+     * @throws Exception If an error occurs during reading.
      */
-    private static byte[] getMessageBytes(@NotNull Scanner scanner, Path messagePath) throws Exception {
-        System.out.println("O arquivo 'message.enc' existe. Deseja usar a mensagem existente? (S/N)");
+    private static byte[] getMessageBytes( Scanner scanner, Path messagePath) throws Exception {
+        System.out.println("The file 'message.enc' exists. Do you want to use the existing message? (Y/N)");
         String choice = scanner.nextLine().trim().toUpperCase();
-        if (choice.equals("S")) {
+        if (choice.equals("Y")) {
             return FileUtils.readStringAsBytes(messagePath.toString());
         } else {
             return requestNewMessage(scanner, messagePath);
@@ -91,15 +89,15 @@ public final class Parte2 {
     }
 
     /**
-     * Solicita uma nova mensagem cifrada ao usuário e a salva em um arquivo.
+     * Prompts the user for a new encrypted message and saves it to a file.
      *
-     * @param scanner     Scanner para entrada do usuário.
-     * @param messagePath Caminho do arquivo onde a mensagem será salva.
-     * @return Bytes da mensagem cifrada.
-     * @throws Exception Se ocorrer um erro durante a escrita.
+     * @param scanner     Scanner for user input.
+     * @param messagePath Path to the file where the message will be saved.
+     * @return Encrypted message bytes.
+     * @throws Exception If an error occurs during writing.
      */
-    private static byte @NotNull [] requestNewMessage(@NotNull Scanner scanner, @NotNull Path messagePath) throws Exception {
-        System.out.println("Digite a mensagem cifrada (em hexadecimal):");
+    private static byte  [] requestNewMessage( Scanner scanner,  Path messagePath) throws Exception {
+        System.out.println("Enter the encrypted message (in hexadecimal):");
         String messageHex = scanner.nextLine().trim();
         byte[] messageBytes = CryptographyUtils.hexStringToByteArray(messageHex);
         FileUtils.writeString(messagePath.toString(), messageHex);
@@ -107,34 +105,34 @@ public final class Parte2 {
     }
 
     /**
-     * Decifra a mensagem utilizando a chave e o IV.
+     * Decrypts the message using the key and IV.
      *
-     * @param ciphertext Texto cifrado.
-     * @param secretKey  Chave secreta.
-     * @param iv         Vetor de inicialização (IV).
-     * @return Mensagem decifrada como texto plano.
+     * @param ciphertext Encrypted text.
+     * @param secretKey  Secret key.
+     * @param iv         Initialization vector (IV).
+     * @return Decrypted message as plain text.
      */
-    private static @NotNull String decryptMessage(byte[] ciphertext, byte[] secretKey, byte[] iv) {
+    private static  String decryptMessage(byte[] ciphertext, byte[] secretKey, byte[] iv) {
         try {
             Cipher cipher = CryptographyUtils.getCipher(Cipher.DECRYPT_MODE, secretKey, iv);
             byte[] plaintextBytes = cipher.doFinal(ciphertext);
             String plaintext = new String(plaintextBytes, StandardCharsets.UTF_8);
-            System.out.println("Mensagem decifrada: " + plaintext);
+            System.out.println("Decrypted message: " + plaintext);
             return plaintext;
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao decifrar a mensagem.", e);
+            throw new RuntimeException("Error decrypting the message.", e);
         }
     }
 
     /**
-     * Inverte a mensagem fornecida.
+     * Reverses the given message.
      *
-     * @param plaintext Mensagem original.
-     * @return Mensagem invertida.
+     * @param plaintext Original message.
+     * @return Reversed message.
      */
-    private static @NotNull String invertMessage(String plaintext) {
+    private static  String invertMessage(String plaintext) {
         String inverted = new StringBuilder(plaintext).reverse().toString();
-        System.out.println("Mensagem invertida: " + inverted);
+        System.out.println("Reversed message: " + inverted);
         return inverted;
     }
 }
